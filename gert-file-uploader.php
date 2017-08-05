@@ -10,5 +10,5 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
-require plugin_dir_path( __FILE__ ) . 'inc/gert-worker-file-uploader.php';
+define( 'FILE_UPLOADER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+require FILE_UPLOADER_PLUGIN_PATH . 'inc/gert-worker-file-uploader.php';

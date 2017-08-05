@@ -3,14 +3,14 @@
 class Gert_File_Uploader {
     public function __construct() {
         add_action( 'admin_menu', array( $this, 'gert_add_to_admin_menu' ) );
-        register_activation_hook( FILE_UPLOADER_PLUGIN_PATH . 'gert-file-uploader.php', array( $this, 'gert_add_custom_uploads_directory' ) );
+        register_activation_hook( GERT_PLUGIN_PATH . 'gert-file-uploader.php', array( $this, 'gert_add_custom_uploads_directory' ) );
     }
 
     function gert_add_custom_uploads_directory() {       
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
         $upload_dir = $upload_dir . '/gert';
-        if (! is_dir($upload_dir)) {
+        if ( ! is_dir( $upload_dir ) ) {
            wp_mkdir_p( $upload_dir );
         }
     }

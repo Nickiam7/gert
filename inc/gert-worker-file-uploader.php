@@ -2,8 +2,19 @@
 
 class Gert_File_Uploader {
     public function __construct() {
+        add_action( 'admin_enqueue_scripts', array( $this, 'gert_enqueue_scripts' ) );
         add_action( 'admin_menu', array( $this, 'gert_add_to_admin_menu' ) );
         register_activation_hook( GERT_PLUGIN_PATH . 'gert-file-uploader.php', array( $this, 'gert_add_custom_uploads_directory' ) );
+    }
+
+    public function gert_enqueue_scripts() {
+        $src = GERT_PLUGIN_PATH . 'js/gert-worker-file-uploader.js';
+        
+        wp_enqueue_script( 'gert-worker-js', $src, array( 'jquery' ), false, true );
+        wp_localize_script( 'gert-file-uploader', 'gert_vars', array(
+            'upload_file_nonce' => wp_create_nonce( 'gert-file-upload' ),
+            )
+        );
     }
 
     function gert_add_custom_uploads_directory() {       

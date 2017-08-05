@@ -17,7 +17,7 @@ class Gert_File_Uploader {
         );
     }
 
-    function gert_add_custom_uploads_directory() {       
+    public function gert_add_custom_uploads_directory() {       
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
         $upload_dir = $upload_dir . '/gert';

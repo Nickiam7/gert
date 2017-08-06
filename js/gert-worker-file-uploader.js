@@ -29,11 +29,11 @@
                 dataType: 'json',
                 cache: false,
                 data: {
-                    action: 'gert',
+                    action: 'gert_upload_file',
                     file_data: event.target.result,
                     file: file.name,
                     file_type: file.type,
-                    nonce: dbi_vars.upload_file_nonce
+                    nonce: gert_vars.upload_file_nonce
                 },
                 error: function( jqXHR, textStatus, errorThrown ) {
                     console.log( jqXHR, textStatus, errorThrown );
@@ -42,15 +42,11 @@
                     var size_done = start + slice_size;
                     var percent_done = Math.floor( ( size_done / file.size ) * 100 );
                     
-                    if ( next_slice < file.size ) {
-                        // Update upload progress
+                    if ( next_slice < file.size ) {                        
                         $( '#gert-upload-progress' ).html( 'Uploading File - ' + percent_done + '%' );
-
-                        // More to upload, call function recursively
                         upload_file( next_slice );
-                    } else {
-                        // Update upload progress
-                        $( '#gert-upload-progress' ).html( 'Upload Complete!' );
+                    } else {                        
+                        $( '#gert-upload-progress' ).html( 'Upload Complete!' );                        
                     }
                 }
             } );

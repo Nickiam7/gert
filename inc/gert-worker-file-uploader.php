@@ -10,10 +10,12 @@ class Gert_File_Uploader {
     }
 
     public function gert_enqueue_scripts() {
-        $src = plugins_url( '/js/gert-worker-file-uploader.js', GERT_PLUGIN_PATH . '/gert' );
+        $gert_js_src = plugins_url( '/js/gert-worker-file-uploader.js', GERT_PLUGIN_PATH . '/gert' );
+        $gert_css_src = plugins_url( '/css/gert-worker-file-uploader.css', GERT_PLUGIN_PATH . '/gert' );
 
-        wp_enqueue_script( 'gert-file-uploader', $src, array( 'jquery' ), false, true );
-        wp_localize_script( 'gert-file-uploader', 'gert_vars', array(
+        wp_enqueue_style( 'gert-file-uploader-css', $gert_css_src );
+        wp_enqueue_script( 'gert-file-uploader-js', $gert_js_src, array( 'jquery' ), false, true );
+        wp_localize_script( 'gert-file-uploader-js', 'gert_vars', array(
             'upload_file_nonce' => wp_create_nonce( 'gert-file-upload' ),
             )
         );
@@ -35,18 +37,41 @@ class Gert_File_Uploader {
             'manage_options',
             'gert',
             array( $this, 'gert_render_pluign_page' ),
-            'dashicons-arrow-up-alt', 
+            'dashicons-upload', 
             10
         );
     }
 
     public function gert_render_pluign_page() {
         ?>
-        <form>
-            <p id="gert-upload-progress">Please select a file and click "Upload" to continue.</p>
-            <input id="gert-file-upload" type="file" name="gert_import_file" /><br>
-            <input id="gert-file-upload-submit" class="button button-primary" type="submit" value="Upload" />
-        </form>
+        <div class="gert">
+            <div class="gert__header">
+                <h1><span class="dashicons dashicons-upload"></span> Gert</h1>
+                <p>Select a file, click upload. <strong>That's Gert!</strong> </p>
+            </div>            
+            <div class="gert__form">
+                        
+                <form>  
+                    <div class="gert__form-body">
+                        <label for="gert-file-upload" class="gert-file-upload-button">
+                            <span class="dashicons dashicons-upload"></span> 
+                            <div id="file-name">Choose a file </div>
+                        </label>
+                        <input id="gert-file-upload" type="file" name="gert_import_file" />
+                        
+                        <div class="form-upload"></div>
+                        <div id="gert-upload-progress"></div>
+                        
+                        <div class="gert-file-complete"></div>
+                    </div>
+                    <div class="gert__form-footer">
+                        <input id="gert-file-upload-submit" class="gert__form-footer-button" type="submit" value="Upload" />
+                    </div> 
+
+                </form> 
+            </div>
+            
+        </div>
         <?php           
     }
 
